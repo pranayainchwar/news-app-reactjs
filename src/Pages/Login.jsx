@@ -1,10 +1,21 @@
 // Importing necessary modules and components
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../UserContext";
+
 import axios from "axios";
 import "../index"; // Importing index.css or index.js file
 
 // Login component handling user login form
 const Login = () => {
+  const { setIsLoggedIn } = useContext(UserContext);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const handleLogin = () => {
+    // Perform login logic, once successful:
+    setIsLoggedIn(true); // Set isLoggedIn state to true
+    setLoggedIn(true); // Optionally set a local state for logged-in status
+  };
+
   // State to manage form data
   const [formData, setFormData] = useState({
     YourName: "",
@@ -138,7 +149,7 @@ const Login = () => {
 
           {/* Submit button */}
           <div>
-            <button type="submit">Submit</button>
+            <button onClick={handleLogin}>Login</button>
           </div>
         </form>
       </div>

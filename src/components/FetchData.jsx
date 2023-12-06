@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react"; // Import useContext, useState, useEffect
 import axios from "axios";
-import { useEffect } from "react";
+import { UserContext } from "../UserContext"; // Import UserContext
 const FetchData = ({ cat }) => {
   const [Data, setData] = useState("");
   const fetchData = async () => {
@@ -15,6 +15,19 @@ const FetchData = ({ cat }) => {
   useEffect(() => {
     fetchData();
   }, [cat]);
+
+  const { isLoggedIn } = useContext(UserContext); // Access isLoggedIn state from context
+
+  const handleClick = () => {
+    if (!isLoggedIn) {
+      // Redirect to login if user is not logged in
+      window.location.href = "/login"; // Or use React Router's history to push the login route
+    } else {
+      // Proceed with the View More functionality
+      // ...
+    }
+  };
+
   return (
     <div className=" container my-4">
       <h3>
@@ -49,7 +62,7 @@ const FetchData = ({ cat }) => {
 
                   <p>{items.content}</p>
                   <a href={items.url} target="blank">
-                    View More
+                    <button onClick={handleClick}>View More</button>
                   </a>
                 </div>
               </>
